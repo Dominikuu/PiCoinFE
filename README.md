@@ -5,13 +5,13 @@ Situation:
 
 API
 取得用戶朋友的狀態
-GET /{user_id}/friends
+- GET /{user_id}/friends
 
 取得用戶的狀態
-GET /{user_id}/mining
+- GET /{user_id}/mining
 
 開始挖礦
-POST /{user_id}/mining
+- POST /{user_id}/mining
 
 coins: number
 activated_time: number
@@ -28,19 +28,16 @@ user_id: string
 expired_time: int
 activated_time: int
 
-mining_activate(){
-  
-}
+1. Install node-module
+```
+npm install
+```
 
-get_mining_status() {
-
-  return {
-    point: null,
-    activated_time,
-    expired_time
-  }
-}
-
-get_friends_mining_status() {
-
-}
+2. Set up backend service on VM
+3. Check environment variable for Backend host
+4. Run Angular application
+```
+# Debug mode
+ng serve
+# Prod mode
+ng build
