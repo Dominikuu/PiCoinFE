@@ -1,0 +1,70 @@
+<div class="friend-row center">
+  <div class="progress__ring">
+    <svg height="100" width="100">
+      <circle
+        class="progress-ring__circle progress-ring-circle_active"
+        stroke-dashoffset="596.6"
+        r="30"
+        cx="50"
+        cy="50"
+      />
+      <circle
+        class="progress-ring__circle progress-ring-circle_background"
+        r="30"
+        cx="50"
+        cy="50"
+      />
+    </svg>
+    <div class="progress-ring__value">
+      <div class="friend-label">Friend</div>
+      <div>
+        {{ friends?.length.toString() }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="center mining-row">
+  <div class="progress__ring">
+    <svg height="400" width="400">
+      <circle
+        id="circle"
+        class="progress-ring__circle progress-ring-circle_active"
+        r="150"
+        cx="200"
+        cy="200"
+      />
+      <circle
+        class="progress-ring__circle progress-ring-circle_background"
+        r="150"
+        cx="200"
+        cy="200"
+      />
+    </svg>
+    <div class="progress-ring__value">
+      <div class="coin">{{ points?.toFixed(2).toString() }}</div>
+      <div class="remain" *ngIf="remain.h || remain.m || remain.s">
+        <ul>
+          <li>{{ remain.h }}</li>
+          <li>:</li>
+          <li>{{ remain.m }}</li>
+          <li>:</li>
+          <li>{{ remain.s }}</li>
+        </ul>
+      </div>
+      <div class="expired-date" *ngIf="expired_date">
+        Expired at: {{ expired_date }}
+      </div>
+      <div>
+        <button
+          *ngIf="!expired_date"
+          mat-raised-button
+          color="accent"
+          (click)="activateMining()"
+        >
+          Activate
+        </button>
+        <button mat-raised-button (click)="onRefreshBtnClick()">Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>

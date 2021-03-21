@@ -1,0 +1,9 @@
+/*
+ * Sizing variables for Router-outlets
+ */
+$outlets-header-padding-top: 1rem;
+// 1rem (breadcrumb line-height) + 0.75rem (line-gap) + 1rem (title font-size)
+$outlets-header-height: (1rem + 0.75rem + 1rem + $outlets-header-padding-top);
+$outlets-footer-margin-bottom: 0.5rem;
+$outlets-footer-lines: 2;
+$outlets-footer-height: (1rem + $outlets-footer-margin-bottom) * ($outlets-footer-lines + 1);

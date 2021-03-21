@@ -1,0 +1,7 @@
+{
+  "*": {
+      "target": "http://local-dominique",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

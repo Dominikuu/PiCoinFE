@@ -1,0 +1,181 @@
+<div class="wrapper">
+  <mat-toolbar>
+    <div class="header-bar">
+      <div class="left-separate left-header">
+        <div class="coconut-logo">
+          <a class="logo" href="./#/product">Pi Coin</a>
+        </div>
+        <div class="dropdowns"></div>
+      </div>
+      <div class="right-header">
+        <div class="landing">
+          <button
+            *ngIf="!isLoggedIn; else greeting"
+            mat-flat-button
+            (click)="openDialog()"
+          >
+            Sign up/ Login
+          </button>
+          <ng-template #greeting>
+            <span>Hi! </span>
+            <span>{{ authService?.username }}</span>
+          </ng-template>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="onLogout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>
+
+<ng-template #landing>
+  <div class="modal-container">
+    <div class="modal-left" *ngIf="landingType === 'LOGIN'">
+      <h2 mat-dialog-title>Welcome!</h2>
+      <form class="form-wrapper" [formGroup]="form">
+        <div class="form-group">
+          <mat-form-field floatLabel="always">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.email.errors }"
+            />
+            <mat-error *ngIf="f.email.errors?.required">
+              <span *ngIf="f?.email.errors?.required">Email is required</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field floatLabel="always">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f?.password.errors }"
+            />
+            <mat-error
+              *ngIf="
+                f.password.errors?.required || f.password.errors?.minlength
+              "
+            >
+              <span *ngIf="f?.password.errors?.required"
+                >Password is required</span
+              >
+              <span *ngIf="f?.password.errors?.minlength"
+                >Password must be at least 6 characters</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <button
+            mat-raised-button
+            [class.spinner]="loading"
+            [disabled]="loading || form.invalid"
+            (click)="onLogin()"
+            color="primary"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+      <p class="sign-up">
+        Don't have an account?
+        <a mat-flat-button (click)="switchLandingType('SIGNUP')">Sign up now</a>
+      </p>
+    </div>
+    <div class="modal-left" *ngIf="landingType === 'SIGNUP'">
+      <h2 mat-dialog-title>Welcome!</h2>
+      <form class="form-wrapper" [formGroup]="form">
+        <div class="form-group"></div>
+        <div class="form-group">
+          <mat-form-field floatLabel="always">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+            />
+            <mat-error *ngIf="submitted && f.email.errors?.required">
+              <span *ngIf="f.email.errors?.required">Email is required</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field floatLabel="always">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.email.errors }"
+            />
+            <mat-error *ngIf="submitted || f.email.errors?.required">
+              <span *ngIf="f.email.errors?.required">Email is required</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field floatLabel="always">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.password.errors }"
+            />
+            <mat-error
+              *ngIf="
+                f.password.errors?.required || f.password.errors?.minlength
+              "
+            >
+              <span *ngIf="f.password.errors?.required"
+                >Password is required</span
+              >
+              <span *ngIf="f.password.errors?.minlength"
+                >Password must be at least 6 characters</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <button
+            mat-raised-button
+            [class.spinner]="loading"
+            [disabled]="loading || form.invalid"
+            (click)="onSignup()"
+            color="primary"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+      <p class="sign-up">
+        Do you have an account?
+        <a mat-flat-button (click)="switchLandingType('LOGIN')">Log in now</a>
+      </p>
+    </div>
+    <div class="modal-right">
+      <div class="login-with">
+        <h2>{{ landingType === "LOGIN" ? "Login" : "Signup" }} With</h2>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,16 @@
+/*
+ * SASS mixin for box-shadow & text-shadow
+ */
+
+@mixin box-shadow($value) {
+    -webkit-box-shadow: $value;
+    -khtml-box-shadow: $value;
+    -moz-box-shadow: $value;
+    -ms-box-shadow: $value;
+    -o-box-shadow: $value;
+}
+
+@mixin text-shadow($value) {
+    -webkit-text-shadow: $value;
+    text-shadow: $value;
+}

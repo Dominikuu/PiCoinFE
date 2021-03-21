@@ -1,0 +1,7 @@
+[1126/011731.352:ERROR:directory_reader_win.cc(43)] FindFirstFile: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.371:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\45c7e8b2-ed17-4da1-96ba-6ad7ba57d3b6: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.380:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\2f7a37e4-f961-44af-9676-73ba201d2070: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.388:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\9be38ed4-e75a-4184-88a4-1c7b81e68456: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.396:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\7329e85b-c281-46b4-bcb9-00fa634a3e49: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.403:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\f1a3c777-3209-489b-80c8-0142749f0a0a: ╰参тぃ﹚隔畖 (0x3)
+[1126/011731.408:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Dominique Chen\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\946abed0-c690-4018-9d8b-8032239e89cb: ╰参тぃ﹚隔畖 (0x3)

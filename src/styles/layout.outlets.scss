@@ -1,0 +1,22 @@
+@import "src/styles/_sizing.outlets";
+$container-padding: 5rem;
+$header-height: $outlets-header-height + $outlets-header-padding-top;
+$footer-height: $outlets-footer-height + $outlets-footer-margin-bottom;
+
+.outlets {
+  &-header {
+    // header style
+    padding: $outlets-header-padding-top 1rem 0;
+    height: $outlets-header-height;
+  }
+
+  &-container {
+    padding: 0.75rem 1rem $container-padding;
+    min-height: calc(100% - #{$outlets-header-height} - #{$outlets-footer-height});
+  }
+}
+$inf-scroll-exclude: $header-height + $footer-height + $container-padding;
+
+.infinite-scrolling {
+  height: calc(100vh - #{$inf-scroll-exclude}) !important;
+}

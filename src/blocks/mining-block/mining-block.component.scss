@@ -1,0 +1,87 @@
+.friend-row {
+  margin-top: 3rem;
+  padding-left: 20rem;
+
+  .friend-label {
+    font-size: 0.75rem;
+  }
+}
+
+.mining-row {
+  margin-top: -5rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.progress__ring {
+  position: relative;
+  display: flex;
+  max-width: 400px;
+}
+
+.progress-ring__circle {
+  fill: transparent;
+  stroke: #fff;
+}
+
+.progress-ring-circle_background {
+  opacity: 0.4;
+  stroke-width: 6px;
+}
+
+.progress-ring-circle_active {
+  stroke-width: 5px;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.progress-ring__value {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto Mono", monospace;
+  font-size: 1em;
+  color: #fff;
+  flex-direction: column;
+}
+
+.progress-ring-value_small {
+  font-size: 3em;
+}
+
+.coin {
+  font-size: 2.5rem;
+  font-weight: bold;
+  padding: 0.4rem 0;
+}
+
+.remain {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 0.2rem;
+
+  ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: inline-block;
+      font-size: 1.5rem;
+      list-style-type: none;
+      padding: 0.2rem;
+    }
+  }
+}
+
+.expired-date {
+  font-size: 0.5rem;
+  padding: 0.65rem;
+}

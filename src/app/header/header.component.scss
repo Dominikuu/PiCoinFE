@@ -1,0 +1,253 @@
+@import "src/styles/_variables";
+@import "src/styles/mixin.animation";
+@import "src/styles/mixin.flex";
+@import "src/styles/mixin.shadow";
+
+.wrapper {
+  .header-bar {
+    @include flexbox();
+    @include justify-content(space-between);
+    width: 100%;
+
+    .left-separate {
+      @include flexbox();
+      @include align-items(center);
+      @include justify-content(left);
+    }
+
+    .left-header {
+      .coconut-logo {
+        @include flexbox();
+
+        .logo {
+          text-decoration: none;
+          color: black;
+        }
+      }
+
+      .dropdowns {
+        @include flexbox();
+        width: 50%;
+
+        .dropdown {
+          @include flexbox();
+          @include align-items(center);
+          padding-right: 1rem;
+          width: 100%;
+
+          .select-label {
+            width: 40%;
+          }
+
+          .select-org,
+          .select-site {
+            width: unset;
+          }
+        }
+      }
+
+      .select-label {
+        margin-right: 0.25rem;
+      }
+
+      .select-group,
+      .select-site,
+      .select-org {
+        margin-right: 0.25rem;
+        min-width: 12rem;
+      }
+    }
+
+    .right-separate {
+      @include flexbox;
+      @include align-items(center);
+      @include justify-content(right);
+
+      .icon-button {
+        margin-left: 0.25rem;
+        line-height: normal;
+
+        &:hover {
+          ::ng-deep svg {
+            fill: var(--menuitem-color-hover);
+          }
+        }
+
+        &-account {
+          @include transform(translate(0, -1px));
+        }
+      }
+
+      .search-full {
+        margin-right: 1rem;
+      }
+    }
+
+    // Use for header has Group dropdown
+    @media (max-width: 1300px) {
+      .right-separate {
+        @include flex-flow(column);
+        @include align-items(flex-start);
+      }
+    }
+
+    .right-header {
+      @include flexbox;
+      @include align-items(center);
+      @include justify-content(right);
+
+      .cart-amount {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        border-radius: 1.5rem;
+        color: #ffffff;
+        background-color: rgba(200, 0, 0, 0.5);
+        height: 2rem;
+        padding: 0.3rem;
+      }
+    }
+
+    // when header has 3 dropdown
+    @media (max-width: 768px) {
+      .left-separate.dropdown {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .left-header {
+        width: auto;
+
+        .nebula-logo {
+          width: 50%;
+        }
+
+        .dropdowns {
+          @include flex-flow(column);
+          @include align-items(flex-start);
+          width: 100%;
+        }
+      }
+
+      .select-site {
+        min-width: 7rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .btn-burger {
+        display: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .link,
+      .icon-button:not(.btn-burger) {
+        display: none;
+      }
+
+      .btn-burger {
+        margin-bottom: 0.1875rem;
+      }
+    }
+  }
+}
+
+mat-toolbar {
+  position: fixed;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  height: var(--header-toolbar-height);
+  font-size: 0.8125rem;
+  font-weight: normal;
+  color: var(--basic-text-color) !important;
+  background-color: #fefefe !important;
+  z-index: 10;
+  box-shadow: 0 1px 2px 0 #c8c8c8;
+}
+
+::ng-deep mat-dialog-container {
+  padding: 0 !important;
+}
+
+.modal-container {
+  display: flex;
+  position: relative;
+  width: 40vw;
+
+  .modal-left {
+    flex: 1.5;
+    padding: 1rem;
+    text-align: center;
+
+    .form-group {
+      margin: 0.25rem 0;
+    }
+  }
+
+  .modal-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      cursor: pointer;
+    }
+
+    &::before {
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-image: url('https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80');
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 0.5;
+    }
+
+    .login-with {
+      position: relative;
+
+      .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .circle {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 20px;
+          margin: 0 0.5rem;
+          cursor: pointer;
+
+          img {
+            width: 100%;
+            padding: 0.3rem;
+          }
+        }
+
+        .fb {
+          background-color: #3a5a91;
+        }
+
+        .google {
+          background-color: #e84c3d;
+          padding-top: 0.25rem;
+        }
+
+        .github {
+          background-color: #000000;
+        }
+      }
+    }
+  }
+}
