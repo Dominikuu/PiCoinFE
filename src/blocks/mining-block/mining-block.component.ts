@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-
+import { cloneDeep } from "lodash";
 import { ApiService } from "src/lib/api.service";
 import {
   AuthenticationService,
   LogStatus,
 } from "src/lib/authenication.service";
 import { environment } from "src/environments/environment";
+import { DEFAULT_COUNTDOWN, PERIMETER } from "./mining-block.definition";
 @Component({
   selector: "mining-block",
   templateUrl: "./mining-block.component.html",
@@ -14,8 +15,8 @@ import { environment } from "src/environments/environment";
 export class MiningBlockComponent implements OnInit {
   friends = [];
   points: number;
-  remain = { h: 0, m: 0, s: 0 };
-  totalLength = 2 * 150 * 3.136517639160156;
+  remain = cloneDeep(DEFAULT_COUNTDOWN);
+  totalLength = PERIMETER;
   expired_time: number = null;
   expired_date: string = "";
   activated_time: number = null;
@@ -106,6 +107,10 @@ export class MiningBlockComponent implements OnInit {
   }
 
   countdown() {
+    if (!this.expired_time) {
+      this.remain = cloneDeep(DEFAULT_COUNTDOWN);
+      return;
+    }
     const second = 1000,
       minute = second * 60,
       hour = minute * 60,

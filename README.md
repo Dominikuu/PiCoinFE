@@ -5,9 +5,14 @@ Situation:
 
 ### GUI
 
-Login
-Ready for mining
-Mining
+- Login
+  ![Image](../master/PiCoin_img/login.png?raw=true)
+
+- Ready for mining
+  ![Image](../master/PiCoin_img/minining_activate.png?raw=true)
+
+- Mining
+  ![Image](../master/PiCoin_img/minining_countdown.png?raw=true)
 
 ### Server
 
