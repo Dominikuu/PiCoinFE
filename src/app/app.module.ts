@@ -5,13 +5,16 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule } from "@ngxs/store";
 import { NgxsRouterPluginModule } from "@ngxs/router-plugin";
+
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
 import { CookieService } from "angular2-cookie/core";
 import { MaterialSharedModule } from "src/material-shared.module";
 
 import { environment } from "src/environments/environment";
-// import { TelemetryModule } from "src/lib/telemetry/telemetry.module";
+import { MiningReducer } from "src/lib/store/mining/mining.reducer";
+import { MiningEffects } from "src/lib/store/mining/mining.effect";
 import { AppRoutingModule } from "./app-routing.module";
-// import { CoconutApiModule } from "src/lib/service/api.module";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { WithHeaderPage } from "./outlets/with-header/with-header.component";
@@ -33,6 +36,8 @@ import { MasterPage } from "./outlets/master/master.component";
     NgxsRouterPluginModule.forRoot(),
 
     AppRoutingModule,
+    StoreModule.forRoot({ miningStatus: MiningReducer }),
+    EffectsModule.forRoot([MiningEffects]),
   ],
   providers: [CookieService],
   bootstrap: [MasterPage],

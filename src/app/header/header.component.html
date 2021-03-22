@@ -94,7 +94,7 @@
       </form>
       <p class="sign-up">
         Don't have an account?
-        <a mat-flat-button (click)="switchLandingType('SIGNUP')">Sign up now</a>
+        <a mat-flat-button (click)="switchLandingType('Signup')">Sign up now</a>
       </p>
     </div>
     <div class="modal-left" *ngIf="landingType === 'SIGNUP'">
@@ -109,9 +109,9 @@
               type="text"
               formControlName="email"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+              [ngClass]="{ 'is-invalid': f.email.errors }"
             />
-            <mat-error *ngIf="submitted && f.email.errors?.required">
+            <mat-error *ngIf="f.email.errors?.required">
               <span *ngIf="f.email.errors?.required">Email is required</span>
             </mat-error>
           </mat-form-field>
@@ -126,7 +126,7 @@
               class="form-control"
               [ngClass]="{ 'is-invalid': f.email.errors }"
             />
-            <mat-error *ngIf="submitted || f.email.errors?.required">
+            <mat-error *ngIf="f.email.errors?.required">
               <span *ngIf="f.email.errors?.required">Email is required</span>
             </mat-error>
           </mat-form-field>
@@ -169,7 +169,7 @@
       </form>
       <p class="sign-up">
         Do you have an account?
-        <a mat-flat-button (click)="switchLandingType('LOGIN')">Log in now</a>
+        <a mat-flat-button (click)="switchLandingType('Login')">Log in now</a>
       </p>
     </div>
     <div class="modal-right">

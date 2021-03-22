@@ -38,6 +38,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   isLoggedIn: boolean = false;
 
+  loading: boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -121,8 +123,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.openDialog();
   }
 
-  switchLandingType(landingType: LandingType) {
-    this.landingType = landingType;
+  switchLandingType(landingType: string) {
+    this.landingType = LandingType[landingType];
     this.setForm();
   }
 }
