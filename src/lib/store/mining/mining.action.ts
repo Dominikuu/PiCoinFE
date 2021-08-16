@@ -1,40 +1,26 @@
 import { createAction, props, Action } from "@ngrx/store";
-import { MiningStatus } from "src/lib/store/mining/mining.state";
+import { MiningStatus, Friends } from "src/lib/store/mining/mining.state";
 
 export enum MiningActionType {
-  Get = "GET",
-  GetSuccess = "GET_SUCCESS",
-  Add = "ADD",
-  Toggle = "TOGGLE",
-  Saved = "SAVED",
-  Error = "ERROR",
+  GetMiningStatus = "GET_MINING_STATUS",
+  GetFriends = "GET_FRIENDS",
+  GetMiningStatusSuccess = "GET_MINING_STATUS_SUCCESS",
+  GetFriendsSuccess = "GET_FRIENDS_SUCCESS",
+  ActivateMining = "ACTIVATE_MINING",
 }
 
-export const getTodo = createAction(MiningActionType.Get);
+export const getMiningStatus = createAction(MiningActionType.GetMiningStatus);
 
-export const getSuccessTodo = createAction(
-  MiningActionType.GetSuccess,
+export const getFriends = createAction(MiningActionType.GetFriends);
+
+export const activateMining = createAction(MiningActionType.ActivateMining);
+
+export const getMiningStatusSuccess = createAction(
+  MiningActionType.GetMiningStatusSuccess,
   props<{ miningStatus: MiningStatus }>()
 );
 
-export const addTodo = createAction(
-  MiningActionType.Add,
-  props<{ text: string }>()
+export const getFriendsSuccess = createAction(
+  MiningActionType.GetFriendsSuccess,
+  props<{ friends: Friends }>()
 );
-
-export const toggleTodo = createAction(
-  MiningActionType.Toggle,
-  props<{ index: number }>()
-);
-
-export const savedTodo = createAction(
-  MiningActionType.Saved,
-  props<{ index: number }>()
-);
-
-export const errorTodo = createAction(MiningActionType.Error, props<Error>());
-
-export interface AddAction extends Action {
-  type: "ADD";
-  text: string;
-}

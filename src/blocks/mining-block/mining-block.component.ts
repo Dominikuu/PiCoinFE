@@ -1,18 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { cloneDeep } from "lodash";
-import { ApiService } from "src/lib/api.service";
 import {
   AuthenticationService,
   LogStatus,
 } from "src/lib/authenication.service";
-import { MiningStatusState } from "src/lib/store/mining/mining.state";
+import * as MiningAction from "src/lib/store/mining/mining.action";
+import { FriendsSum } from "src/lib/store/mining/mining.state";
+import { MiningState, MiningStatus } from "src/lib/store/mining/mining.state";
 import { SocketService } from "src/lib/socket.service";
 import { SocketEvent } from "src/lib/socket.definition";
-import { environment } from "src/environments/environment";
 import { DEFAULT_COUNTDOWN, PERIMETER } from "./mining-block.definition";
 import { Observable, interval, BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
+import {
+  getStateFriends,
+  getStateMiningStatus,
+} from "src/lib/store/mining/mining.selector";
 @Component({
   selector: "mining-block",
   templateUrl: "./mining-block.component.html",
@@ -28,12 +32,12 @@ export class MiningBlockComponent implements OnInit {
   activated_time: number = null;
 
   points$: Observable<number>;
+  friends$: Observable<FriendsSum>;
 
   constructor(
-    private api: ApiService,
     private auth: AuthenticationService,
     private socketService: SocketService,
-    private store: Store<{ miningStatus: MiningStatusState }>
+    private store: Store<{ miningState: MiningState }>
   ) {
     this.auth.logStatus$.subscribe((logStatus) => {
       if (logStatus === LogStatus.LoginSuccess) {
@@ -48,6 +52,11 @@ export class MiningBlockComponent implements OnInit {
       this.getFriendsList();
     }
 
+    this.friends$ = this.store.pipe(select(getStateFriends));
+    this.store.pipe(select(getStateMiningStatus)).subscribe((miningStatus) => {
+      this.updateMiningStatus(miningStatus);
+    });
+
     this.inintMiningSocket();
   }
 
@@ -56,14 +65,17 @@ export class MiningBlockComponent implements OnInit {
     this.emitSocketEvent(SocketEvent.Init);
     // Listen socket event from Server
     this.socketService.listen(SocketEvent.FriendActivated).subscribe((data) => {
+      console.log(SocketEvent.FriendActivated);
       this.getCurrentMining();
     });
-    this.socketService
-      .listen(SocketEvent.FriendExpired)
-      .subscribe((data) => console.log(data));
-    this.socketService
-      .listen(SocketEvent.SelfExpired)
-      .subscribe((data) => console.log(data));
+    this.socketService.listen(SocketEvent.FriendExpired).subscribe((data) => {
+      console.log(SocketEvent.FriendExpired);
+      this.getCurrentMining();
+    });
+    this.socketService.listen(SocketEvent.SelfExpired).subscribe((data) => {
+      console.log(SocketEvent.SelfExpired);
+      this.getCurrentMining();
+    });
   }
 
   private executeCountdown() {
@@ -90,17 +102,14 @@ export class MiningBlockComponent implements OnInit {
   }
 
   async getCurrentMining(): Promise<void> {
-    try {
-      const resp = await this.api
-        .get(environment.PI_COIN.backend + `/${this.auth.userId}/mining/`)
-        .toPromise();
-      this.updateMiningStatus(resp);
-    } catch (e) {
-      this.auth.logout();
-    }
+    this.store.dispatch(MiningAction.getMiningStatus());
   }
 
-  updateMiningStatus({ expired_time, activated_time, points }) {
+  updateMiningStatus(miningStatus: MiningStatus) {
+    if (!miningStatus) {
+      return;
+    }
+    const { expired_time, activated_time, points } = miningStatus;
     this.expired_time = expired_time;
     this.activated_time = activated_time;
     this.expired_date = expired_time
@@ -117,10 +126,7 @@ export class MiningBlockComponent implements OnInit {
   }
 
   async getFriendsList(): Promise<void> {
-    const resp = await this.api
-      .get(environment.PI_COIN.backend + `/${this.auth.userId}/friends/`)
-      .toPromise();
-    this.friends = resp;
+    this.store.dispatch(MiningAction.getFriends());
   }
 
   onRefreshBtnClick(): void {
@@ -129,13 +135,8 @@ export class MiningBlockComponent implements OnInit {
   }
 
   async activateMining() {
-    const resp = await this.api
-      .post(environment.PI_COIN.backend + `/${this.auth.userId}/mining/`, {
-        activated: true,
-      })
-      .toPromise();
+    this.store.dispatch(MiningAction.activateMining());
     this.emitSocketEvent(SocketEvent.FriendActivated);
-    this.updateMiningStatus(resp);
   }
 
   draw() {

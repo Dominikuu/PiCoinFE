@@ -1,11 +1,21 @@
 export interface MiningStatus {
   activated_time: number;
   expired_time: number;
-  coins: number;
+  points: number;
 }
 
-export interface MiningStatusState {
+export interface Friends {
+  [key: string]: boolean;
+}
+
+export interface MiningState {
   mining_status: MiningStatus;
+  friends: Friends;
 }
 
-export const initialState: MiningStatusState = { mining_status: null };
+export const initialState: MiningState = { mining_status: null, friends: null };
+
+export interface FriendsSum {
+  activated_count: number;
+  total: number;
+}

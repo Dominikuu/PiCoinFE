@@ -18,7 +18,8 @@
     <div class="progress-ring__value">
       <div class="friend-label">Friend</div>
       <div>
-        {{ friends?.length.toString() }}
+        {{ (friends$ | async)?.activated_count }} /
+        {{ (friends$ | async)?.total }}
       </div>
     </div>
   </div>
