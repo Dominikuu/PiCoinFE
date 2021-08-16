@@ -41,7 +41,7 @@
       />
     </svg>
     <div class="progress-ring__value">
-      <div class="coin">{{ points?.toFixed(2).toString() }}</div>
+      <div class="coin">{{ (points$ | async)?.toFixed(2).toString() }}</div>
       <div class="remain" *ngIf="remain.h || remain.m || remain.s">
         <ul>
           <li>{{ remain.h }}</li>

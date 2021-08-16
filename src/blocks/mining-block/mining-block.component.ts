@@ -1,12 +1,18 @@
 import { Component, OnInit } from "@angular/core";
+import { select, Store } from "@ngrx/store";
 import { cloneDeep } from "lodash";
 import { ApiService } from "src/lib/api.service";
 import {
   AuthenticationService,
   LogStatus,
 } from "src/lib/authenication.service";
+import { MiningStatusState } from "src/lib/store/mining/mining.state";
+import { SocketService } from "src/lib/socket.service";
+import { SocketEvent } from "src/lib/socket.definition";
 import { environment } from "src/environments/environment";
 import { DEFAULT_COUNTDOWN, PERIMETER } from "./mining-block.definition";
+import { Observable, interval, BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 @Component({
   selector: "mining-block",
   templateUrl: "./mining-block.component.html",
@@ -21,7 +27,14 @@ export class MiningBlockComponent implements OnInit {
   expired_date: string = "";
   activated_time: number = null;
 
-  constructor(private api: ApiService, private auth: AuthenticationService) {
+  points$: Observable<number>;
+
+  constructor(
+    private api: ApiService,
+    private auth: AuthenticationService,
+    private socketService: SocketService,
+    private store: Store<{ miningStatus: MiningStatusState }>
+  ) {
     this.auth.logStatus$.subscribe((logStatus) => {
       if (logStatus === LogStatus.LoginSuccess) {
         this.getCurrentMining();
@@ -34,6 +47,23 @@ export class MiningBlockComponent implements OnInit {
       this.getCurrentMining();
       this.getFriendsList();
     }
+
+    this.inintMiningSocket();
+  }
+
+  private inintMiningSocket() {
+    // Emit socket event to Server
+    this.emitSocketEvent(SocketEvent.Init);
+    // Listen socket event from Server
+    this.socketService.listen(SocketEvent.FriendActivated).subscribe((data) => {
+      this.getCurrentMining();
+    });
+    this.socketService
+      .listen(SocketEvent.FriendExpired)
+      .subscribe((data) => console.log(data));
+    this.socketService
+      .listen(SocketEvent.SelfExpired)
+      .subscribe((data) => console.log(data));
   }
 
   private executeCountdown() {
@@ -55,7 +85,11 @@ export class MiningBlockComponent implements OnInit {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
-  async getCurrentMining() {
+  private emitSocketEvent(event: SocketEvent): void {
+    this.socketService.emit(event, this.auth.userId);
+  }
+
+  async getCurrentMining(): Promise<void> {
     try {
       const resp = await this.api
         .get(environment.PI_COIN.backend + `/${this.auth.userId}/mining/`)
@@ -72,18 +106,24 @@ export class MiningBlockComponent implements OnInit {
     this.expired_date = expired_time
       ? this.epochToDateFormat(expired_time)
       : null;
-    this.points = points;
+    if (expired_time) {
+      this.points$ = interval(1000).pipe(
+        map((s) => s * (0.25 * this.friends.length + 1) + points)
+      );
+    } else {
+      this.points$ = new BehaviorSubject<any>(points);
+    }
     this.executeCountdown();
   }
 
-  async getFriendsList() {
+  async getFriendsList(): Promise<void> {
     const resp = await this.api
       .get(environment.PI_COIN.backend + `/${this.auth.userId}/friends/`)
       .toPromise();
     this.friends = resp;
   }
 
-  onRefreshBtnClick() {
+  onRefreshBtnClick(): void {
     this.getCurrentMining();
     this.getFriendsList();
   }
@@ -94,6 +134,7 @@ export class MiningBlockComponent implements OnInit {
         activated: true,
       })
       .toPromise();
+    this.emitSocketEvent(SocketEvent.FriendActivated);
     this.updateMiningStatus(resp);
   }
 

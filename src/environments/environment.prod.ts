@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   PI_COIN: {
-    backend: "http://local-dominique:3000",
+    backend: "http://ec2-35-73-73-4.ap-northeast-1.compute.amazonaws.com:3000",
   },
 };
