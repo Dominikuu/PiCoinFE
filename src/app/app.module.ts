@@ -36,7 +36,7 @@ import { MasterPage } from "./outlets/master/master.component";
     NgxsRouterPluginModule.forRoot(),
 
     AppRoutingModule,
-    StoreModule.forRoot({ miningStatus: MiningReducer }),
+    StoreModule.forRoot({ miningState: MiningReducer }),
     EffectsModule.forRoot([MiningEffects]),
   ],
   providers: [CookieService],

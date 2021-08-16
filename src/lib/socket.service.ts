@@ -16,9 +16,6 @@ export class SocketService {
       environment.PI_COIN.socket,
       environment.PI_COIN.config
     );
-    // console.log(this.socket.connect());
-    // this.socket.on("connection", () => this.connected$.next(true));
-    // this.socket.on("disconnect", () => this.connected$.next(false));
   }
 
   join(room: string) {
